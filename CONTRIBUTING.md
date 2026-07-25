@@ -227,3 +227,62 @@ Open a [GitHub Discussion](../../discussions) for questions, ideas, or general f
 ## Governance
 
 See [GOVERNANCE.md](GOVERNANCE.md) for how project decisions are made, the RFC process, and how to become a maintainer.
+
+## Adding a New Language
+
+LumenFlow's frontend uses a lightweight i18n module in `frontend/i18n/`. All user-visible strings are extracted into JSON locale files and applied to the DOM via `data-i18n` attributes.
+
+### Step 1 — Create the locale file
+
+Copy the English baseline and translate every string:
+
+```bash
+cp frontend/i18n/en.json frontend/i18n/{lang}.json
+# e.g. cp frontend/i18n/en.json frontend/i18n/fr.json
+```
+
+Open the new file and translate every string value. **All keys from `en.json` must be present.** Missing keys fall back to English automatically, but complete translations are preferred.
+
+Keys use dot notation to group related strings:
+
+```json
+{
+  "nav": {
+    "paymentHistory": "Historique des Paiements"
+  },
+  "table": {
+    "date": "Date",
+    "orderId": "Référence"
+  }
+}
+```
+
+### Step 2 — Register the language in `i18n.js`
+
+Open `frontend/i18n/i18n.js` and add your language code to the `SUPPORTED` array:
+
+```js
+const SUPPORTED = ['en', 'es', 'fr']; // add 'fr' here
+```
+
+### Step 3 — Add the option to the language selector
+
+In each HTML page that has a language selector (currently `frontend/history.html`), add your language to the `<select id="lang-selector">`:
+
+```html
+<select id="lang-selector" aria-label="Language" onchange="LumenFlowI18n.setLanguage(this.value)" ...>
+  <option value="en">English</option>
+  <option value="es">Español</option>
+  <option value="fr">Français</option>  <!-- add this -->
+</select>
+```
+
+### Step 4 — Test locally
+
+Open the page in a browser and select your new language from the dropdown. Verify all strings are translated and none fall back to keys or English unexpectedly.
+
+### Step 5 — Open a pull request
+
+- Branch name: `feat/i18n-{lang}` (e.g. `feat/i18n-fr`)
+- Include the new `frontend/i18n/{lang}.json` and the updated `SUPPORTED` array + HTML selectors
+- Link the related issue or discussion in your PR description
