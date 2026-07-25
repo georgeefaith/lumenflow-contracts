@@ -8,6 +8,7 @@
   <meta property="og:title" content="Payment History – LumenFlow" />
   <meta property="og:description" content="View and filter your complete LumenFlow payment history, sorted and paginated for easy browsing." />
   <meta name="twitter:card" content="summary" />
+  <script src="i18n/i18n.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -195,51 +196,55 @@
 
 <div class="container">
   <header>
-    <h1>Payment History</h1>
+    <h1 data-i18n="nav.paymentHistory">Payment History</h1>
+    <select id="lang-selector" aria-label="Language" onchange="LumenFlowI18n.setLanguage(this.value)" style="padding:0.4rem 0.6rem;border:1px solid #e0e0e0;border-radius:6px;font-size:0.875rem;cursor:pointer;background:#fff;color:#1a1a2e;">
+      <option value="en">English</option>
+      <option value="es">Español</option>
+    </select>
   </header>
 
   <section class="filter-panel" aria-labelledby="filter-heading">
-    <h2 id="filter-heading" class="sr-only">Filters</h2>
+    <h2 id="filter-heading" class="sr-only" data-i18n="filter.heading">Filters</h2>
     
     <div class="filter-grid">
       <!-- Date Range -->
       <div class="filter-group">
-        <label for="date-start">Date Range</label>
+        <label for="date-start" data-i18n="filter.dateRange">Date Range</label>
         <div class="range-inputs">
-          <input type="date" id="date-start" aria-label="Start Date">
-          <span>to</span>
-          <input type="date" id="date-end" aria-label="End Date">
+          <input type="date" id="date-start" data-i18n="filter.dateStart" data-i18n-attr="aria-label" aria-label="Start Date">
+          <span data-i18n="common.to">to</span>
+          <input type="date" id="date-end" data-i18n="filter.dateEnd" data-i18n-attr="aria-label" aria-label="End Date">
         </div>
       </div>
 
       <!-- Amount Range -->
       <div class="filter-group">
-        <label for="amount-min">Amount Range (XLM)</label>
+        <label for="amount-min" data-i18n="filter.amountRange">Amount Range (XLM)</label>
         <div class="range-inputs">
-          <input type="number" id="amount-min" placeholder="Min" min="0" step="0.1">
-          <span>to</span>
-          <input type="number" id="amount-max" placeholder="Max" min="0" step="0.1">
+          <input type="number" id="amount-min" data-i18n="filter.amountMin" data-i18n-attr="placeholder" placeholder="Min" min="0" step="0.1">
+          <span data-i18n="common.to">to</span>
+          <input type="number" id="amount-max" data-i18n="filter.amountMax" data-i18n-attr="placeholder" placeholder="Max" min="0" step="0.1">
         </div>
       </div>
 
       <!-- Token -->
       <div class="filter-group">
-        <label for="token-selector">Token</label>
+        <label for="token-selector" data-i18n="filter.token">Token</label>
         <select id="token-selector">
-          <option value="">All Tokens</option>
-          <option value="native">Native (XLM)</option>
+          <option value="" data-i18n="filter.allTokens">All Tokens</option>
+          <option value="native" data-i18n="filter.nativeXlm">Native (XLM)</option>
           <option value="USDC">USDC</option>
         </select>
       </div>
 
       <!-- Status -->
       <div class="filter-group">
-        <label for="status-selector">Status</label>
+        <label for="status-selector" data-i18n="filter.status">Status</label>
         <select id="status-selector">
-          <option value="Any">Any Status</option>
-          <option value="Completed">Completed</option>
-          <option value="PartiallyRefunded">Partially Refunded</option>
-          <option value="FullyRefunded">Fully Refunded</option>
+          <option value="Any" data-i18n="status.any">Any Status</option>
+          <option value="Completed" data-i18n="status.completed">Completed</option>
+          <option value="PartiallyRefunded" data-i18n="status.partiallyRefunded">Partially Refunded</option>
+          <option value="FullyRefunded" data-i18n="status.fullyRefunded">Fully Refunded</option>
         </select>
       </div>
     </div>
@@ -253,11 +258,11 @@
     <table id="history-table">
       <thead>
         <tr>
-          <th>Date</th>
-          <th>Order ID</th>
-          <th>Recipient</th>
-          <th>Amount</th>
-          <th>Status</th>
+          <th data-i18n="table.date">Date</th>
+          <th data-i18n="table.orderId">Order ID</th>
+          <th data-i18n="table.recipient">Recipient</th>
+          <th data-i18n="table.amount">Amount</th>
+          <th data-i18n="table.status">Status</th>
         </tr>
       </thead>
       <tbody id="history-body">
@@ -265,7 +270,7 @@
       </tbody>
     </table>
     <div id="empty-state" class="empty-state" style="display:none">
-      No payments found matching your filters.
+      <span data-i18n="emptyState.noPayments">No payments found matching your filters.</span>
     </div>
   </div>
 </div>
